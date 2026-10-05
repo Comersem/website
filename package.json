@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Comersem catalog - production wrapper that builds and serves the React app in /frontend",
+  "scripts": {
+    "postinstall": "yarn --cwd frontend install --frozen-lockfile || npm --prefix frontend install --legacy-peer-deps",
+    "build": "cd frontend && craco build",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@craco/craco": "7.1.0",
+    "express": "4.21.2",
+    "react-scripts": "5.0.1"
+  }
+}
