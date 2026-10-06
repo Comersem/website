@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-<<<<<<< HEAD
   "description": "Comersem catalog - production wrapper that builds and serves the React app in /frontend",
   "scripts": {
     "postinstall": "yarn --cwd frontend install --frozen-lockfile || npm --prefix frontend install --legacy-peer-deps",
@@ -15,10 +14,6 @@
   "dependencies": {
     "@craco/craco": "7.1.0",
     "express": "4.21.2",
-    "react-scripts": "5.0.1"
-  }
-=======
-  "dependencies": {
     "@hookform/resolvers": "5.0.1",
     "@radix-ui/react-accordion": "1.2.8",
     "@radix-ui/react-alert-dialog": "1.1.11",
@@ -156,5 +151,5 @@
     "http-proxy-middleware": "2.0.10"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
->>>>>>> a8e3754e57e2080307f625098c3c5056a3f7c7ee
+
 }
