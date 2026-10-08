@@ -1,6 +1,7 @@
 import React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { resolveImg } from "../lib/api";
+import { getLocalProductImage } from "../hooks/useCatalog";
 
 // 3D perspective carousel replicating the COMERSEM hero showcase.
 const Carousel3D = ({ products, index, setIndex, onInfo }) => {
@@ -49,7 +50,7 @@ const Carousel3D = ({ products, index, setIndex, onInfo }) => {
               aria-label={p.label}
             >
               <img
-                src={resolveImg(p.img)}
+                src={resolveImg(getLocalProductImage(p))}
                 alt={p.label}
                 className="max-h-full w-auto object-contain drop-shadow-[0_30px_40px_rgba(11,42,74,0.25)]"
                 draggable={false}

@@ -3,6 +3,7 @@ import { Plus, Check } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { useQuote } from "../context/QuoteContext";
 import { resolveImg } from "../lib/api";
+import { getLocalProductImage } from "../hooks/useCatalog";
 
 const ProductModal = ({ product, accent = "#3E6A8A", open, onClose }) => {
   const { addItem, items } = useQuote();
@@ -28,7 +29,7 @@ const ProductModal = ({ product, accent = "#3E6A8A", open, onClose }) => {
               </span>
             )}
             <img
-              src={resolveImg(product.img)}
+              src={resolveImg(getLocalProductImage(product))}
               alt={product.label}
               className="max-h-[200px] md:max-h-[320px] w-auto object-contain drop-shadow-[0_20px_30px_rgba(11,42,74,0.2)]"
             />

@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import { useQuote } from "../context/QuoteContext";
 import { COMPANY, buildWhatsappMessage } from "../mock";
 import { api, apiError, resolveImg } from "../lib/api";
+import { getLocalProductImage } from "../hooks/useCatalog";
 
 const EMPTY_FORM = { nombre: "", email: "", telefono: "", empresa: "", mensaje: "" };
 const inputCls = "h-11 w-full rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300";
@@ -81,7 +82,7 @@ const QuoteDrawer = () => {
                   {items.map((it) => (
                     <div key={it.id} className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/60 p-3" data-testid={`quote-item-${it.id}`}>
                       <div className="w-16 h-16 rounded-xl bg-white border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden">
-                        <img src={resolveImg(it.img)} alt={it.label} className="max-w-full max-h-full object-contain p-1" />
+                        <img src={resolveImg(getLocalProductImage(it))} alt={it.label} className="max-w-full max-h-full object-contain p-1" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-bold text-slate-800 truncate">{it.label}</p>

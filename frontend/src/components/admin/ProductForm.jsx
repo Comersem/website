@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import ImageUpload from "./ImageUpload";
 import { api, apiError } from "../../lib/api";
+import { getLocalProductImage } from "../../hooks/useCatalog";
 
 const EMPTY = {
   category: "hielo", name: "", label: "", subtitulo: "", capacidad: "", spec: "", descripcion: "",
@@ -71,7 +72,10 @@ const ProductForm = ({ open, product, categories, onClose }) => {
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={submit} className="space-y-5" data-testid="product-form">
-          <ImageUpload value={form.img} onChange={(url) => setForm((f) => ({ ...f, img: url }))} />
+          <ImageUpload
+            value={getLocalProductImage({ ...form, id: product?.id })}
+            onChange={(url) => setForm((f) => ({ ...f, img: url }))}
+          />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="Categoría">

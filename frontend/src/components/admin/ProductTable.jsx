@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Pencil, Trash2, Star } from "lucide-react";
 import { toast } from "sonner";
 import { api, apiError, resolveImg } from "../../lib/api";
+import { getLocalProductImage } from "../../hooks/useCatalog";
 
 const ProductTable = ({ products, categories, loading, onEdit }) => {
   const qc = useQueryClient();
@@ -48,7 +49,7 @@ const ProductTable = ({ products, categories, loading, onEdit }) => {
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden shrink-0">
                         {p.img ? (
-                          <img src={resolveImg(p.img)} alt="" className="max-w-full max-h-full object-contain p-1" />
+                          <img src={resolveImg(getLocalProductImage(p))} alt="" className="max-w-full max-h-full object-contain p-1" />
                         ) : (
                           <span className="text-[10px] text-slate-400">Sin foto</span>
                         )}

@@ -138,6 +138,21 @@ let webpackConfig = {
 };
 
 webpackConfig.devServer = (devServerConfig) => {
+  const existingStatic = devServerConfig.static;
+  devServerConfig.static = [
+    ...(Array.isArray(existingStatic)
+      ? existingStatic
+      : existingStatic
+        ? [existingStatic]
+        : []),
+    {
+      directory: path.resolve(__dirname, "../assets"),
+      publicPath: "/assets/",
+      serveIndex: false,
+      watch: false,
+    },
+  ];
+
   // Add health check endpoints if enabled
   if (config.enableHealthCheck && setupHealthEndpoints && healthPluginInstance) {
     const originalSetupMiddlewares = devServerConfig.setupMiddlewares;

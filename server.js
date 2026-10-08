@@ -22,6 +22,7 @@ app.use(
   "/static",
   express.static(path.join(BUILD_DIR, "static"), { immutable: true, maxAge: "1y" })
 );
+app.use("/assets", express.static(path.join(__dirname, "assets"), { maxAge: "1h" }));
 app.use(express.static(BUILD_DIR, { index: false, maxAge: "1h" }));
 
 // Single-page app fallback (react-router routes such as /buscar and /admin).

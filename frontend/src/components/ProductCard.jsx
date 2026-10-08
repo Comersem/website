@@ -2,6 +2,7 @@ import React from "react";
 import { Plus, Check, Info, Thermometer, Box } from "lucide-react";
 import { useQuote } from "../context/QuoteContext";
 import { resolveImg } from "../lib/api";
+import { getLocalProductImage } from "../hooks/useCatalog";
 
 const ProductCard = ({ product, accent = "#3E6A8A", categoryLabel, onInfo, delay = 0 }) => {
   const { addItem, items } = useQuote();
@@ -31,7 +32,7 @@ const ProductCard = ({ product, accent = "#3E6A8A", categoryLabel, onInfo, delay
           </span>
         )}
         <img
-          src={resolveImg(product.img)}
+          src={resolveImg(getLocalProductImage(product))}
           alt={product.label}
           className="max-h-full w-auto object-contain drop-shadow-[0_16px_24px_rgba(11,42,74,0.18)] group-hover:scale-105 transition-transform duration-500"
           loading="lazy"

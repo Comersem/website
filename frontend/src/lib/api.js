@@ -1,6 +1,9 @@
 import axios from "axios";
 
-export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const configuredBackendUrl = process.env.REACT_APP_BACKEND_URL?.trim();
+export const BACKEND_URL =
+  configuredBackendUrl ||
+  (process.env.NODE_ENV === "development" ? "http://localhost:8001" : "");
 const TOKEN_KEY = "comersem_admin_token";
 
 export const api = axios.create({ baseURL: `${BACKEND_URL}/api` });
@@ -18,6 +21,12 @@ export const resolveImg = (src) => (src ? (src.startsWith("/api/") ? `${BACKEND_
 
 export const apiError = (e, fallback = "Ocurrió un error. Intenta de nuevo.") => {
   const d = e?.response?.data?.detail;
+  if (!d && e?.code === "ERR_NETWORK") {
+    return "No se pudo conectar con el servidor. Verifica que el backend esté ejecutándose.";
+  }
+  if (!d && e?.response?.status === 404) {
+    return "No se encontró este servicio. Verifica la dirección del backend.";
+  }
   if (!d) return e?.message || fallback;
   if (typeof d === "string") return d;
   if (Array.isArray(d)) return d.map((x) => x?.msg || JSON.stringify(x)).join(" ");

@@ -3,12 +3,31 @@ import { useQuery } from "@tanstack/react-query";
 import { TrendingUp, Plus, Check, Flame, X } from "lucide-react";
 import { api, resolveImg } from "../lib/api";
 import { useQuote } from "../context/QuoteContext";
+import { getBundledCatalog, getLocalProductImage, withLocalProductImage } from "../hooks/useCatalog";
 
 const PopularStrip = ({ categories, onInfo, onClose }) => {
   const { addItem, items } = useQuote();
   const { data } = useQuery({
     queryKey: ["popular"],
-    queryFn: async () => (await api.get("/products/popular", { params: { limit: 8 } })).data,
+    queryFn: async () => {
+      try {
+        const result = (await api.get("/products/popular", { params: { limit: 8 } })).data;
+        return { ...result, items: result.items.map(withLocalProductImage) };
+      } catch (error) {
+        console.warn("Popular products API unavailable; using featured bundled products.", error);
+        const catalog = await getBundledCatalog();
+        return {
+          based_on_quotes: false,
+          items: catalog
+            .flatMap((category) =>
+              category.products.map((product) => ({ ...product, category: category.key }))
+            )
+            .filter((product) => product.featured && product.disponible)
+            .slice(0, 8)
+            .map((product) => ({ ...product, times_quoted: 0, units: 0 })),
+        };
+      }
+    },
   });
   const products = data?.items || [];
   if (products.length === 0) return null;
@@ -67,7 +86,7 @@ const PopularStrip = ({ categories, onInfo, onClose }) => {
                       <Flame className="w-3 h-3" /> {p.times_quoted} {p.times_quoted === 1 ? "solicitud" : "solicitudes"}
                     </span>
                   )}
-                  <img src={resolveImg(p.img)} alt={p.label} className="max-h-full w-auto object-contain drop-shadow-[0_12px_18px_rgba(11,42,74,0.18)]" loading="lazy" />
+                  <img src={resolveImg(getLocalProductImage(p))} alt={p.label} className="max-h-full w-auto object-contain drop-shadow-[0_12px_18px_rgba(11,42,74,0.18)]" loading="lazy" />
                 </button>
                 <div className="px-4 pb-4">
                   <p className="text-[10px] font-bold tracking-[0.18em] uppercase" style={{ color: accent }}>

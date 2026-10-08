@@ -19,9 +19,12 @@ uvicorn server:app --reload --port 8001
 
 # Frontend
 cd frontend
+cp .env.example .env        # apunta REACT_APP_BACKEND_URL a http://localhost:8001
 yarn install
 yarn start
 ```
+
+MongoDB debe estar disponible en la dirección configurada en `backend/.env` antes de iniciar la API.
 
 ## Pruebas
 ```bash
